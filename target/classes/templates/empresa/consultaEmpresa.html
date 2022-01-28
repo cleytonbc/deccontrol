@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+	<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+    <title>Solicitação</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/dragtable.mod.min.css" integrity="sha512-nR2yAQRLPLBoJHLWmvXFWp+bg7tQ8Vl6AwxE5HgCMLQ3eRUQk0l4d/CmW4F4YOzUiNRgnlLLDGrutDOzy1ImIA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.bootstrap_4.min.css" integrity="sha512-2C6AmJKgt4B+bQc08/TwUeFKkq8CsBNlTaNcNgUmsDJSU1Fg+R6azDbho+ZzuxEkJnCjLZQMozSq3y97ZmgwjA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+
+<body>
+<div class="d-flex" id="wrapper">		
+		<th:block th:include="/fragments/layout :: menuLateral "></th:block>
+
+		<div id="page-content-wrapper">
+			<th:block th:include="/fragments/layout :: topo "></th:block>
+
+			<div class="container-fluid pt-3">
+						<div class="card w-100">
+		<div class="card-header ">
+		<h5 class="card-title text-center">Consulta Empresas</h5>
+		</div>
+		<div class="card-body">
+		<input class="form-control mb-3" id="buscarNaTabela" type="text" placeholder="Buscar na tabela...">
+			<table class="table table-bordered table-sm tablesorter" id="tabelaOrdenar">
+		       <thead>
+		            <tr>
+						<th>Código</th>
+						<th>Filial</th>
+						<th>CNPJ</th>
+						<th>Nome</th>
+						<th>Situação</th>
+		            </tr>
+		        </thead>
+		        <tbody th:remove="${#arrays.isEmpty(listaEmpresas)} ? all : 'all-but-first'">
+				<tr th:each="empresa: ${listaEmpresas}">
+					
+					<td th:text="${empresa.codEmp}"></td>
+					<td th:text="${empresa.codEmpFilial}"></td>
+					<td th:text="${empresa.cnpj}"></td>
+					<td th:text="${#strings.abbreviate(empresa.nome,60)}"></td>
+					<td><span th:text="${empresa.ativa} ? 'Ativa' : 'Inativa'" class="badge" th:classappend="${empresa.ativa} ? 'badge-success' : 'badge-danger'"></span></td>
+					<td><a th:href="@{/empresas/editar/{id}(id=${empresa.id})}"><i class="btn fas fa-edit"></i></a></td>
+		    </table>
+		
+		</div>
+	</div>
+
+			</div>
+
+		</div>
+</div>
+<footer>
+<th:block th:include="/fragments/layout :: rodape "></th:block>
+		
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:src="@{/js/ordenartabelaEmpresa.js}"></script>
+<script>
+$(document).ready(function(){
+  $("#buscarNaTabela").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tabelaOrdenar tbody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+</footer>
+	
+
+
+
+</body>
+</html>

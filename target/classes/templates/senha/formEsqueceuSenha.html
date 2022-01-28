@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:fragment="cabecalho">
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/vendor/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome/css/all.css}" />
+<!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet" /> -->
+
+
+</head>
+<body class="text-center">
+<div>
+    <h2>Esqueci minha senha</h2>
+</div>
+     
+<div th:if="${erro != null}">
+    <div class="alert alert-danger">[[${erro}]]</div>
+</div>
+<div th:if="${mensagem != null}">
+    <div class="alert alert-success">[[${mensagem}]]</div>
+</div>
+         
+<form th:action="@{/forgot_password}" method="post" style="max-width: 420px; margin: 0 auto;">
+<div class="border border-secondary rounded p-3">
+    <div>
+        <p>Enviaremos um link de redefinição de senha para seu e-mail</p>
+    </div>
+    <div>
+        <p>
+            <input type="email" name="email" class="form-control" placeholder="Enter your e-mail" required autofocus/>
+        </p>         
+        <p class="text-center">
+            <input type="submit" value="Send" class="btn btn-primary" />
+        </p>
+    </div>
+</div>
+</form>
+</body>
+</html>

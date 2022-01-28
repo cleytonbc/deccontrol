@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:fragment="cabecalho">
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/vendor/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome/css/all.css}" />
+<!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet" /> -->
+
+
+</head>
+<body>
+<div class="alert  alert-success  alert-dismissible" role="alert" 
+		     th:if="${not #strings.isEmpty(mensagem)}" >
+			<span th:text="${mensagem}"></span>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		   	 <span aria-hidden="true">&times;</span>
+		    </button>
+			</div>
+<div class="alert  alert-danger  alert-dismissible" role="alert" 
+		     th:if="${not #strings.isEmpty(erro)}" >
+			<span th:text="${erro}"></span>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		   	 <span aria-hidden="true">&times;</span>
+		    </button>
+			</div>
+<th:block th:include="/fragments/layout :: rodape "></th:block>
+</body>
+</html>

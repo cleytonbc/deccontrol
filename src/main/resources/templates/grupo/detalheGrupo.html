@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/dragtable.mod.min.css" integrity="sha512-nR2yAQRLPLBoJHLWmvXFWp+bg7tQ8Vl6AwxE5HgCMLQ3eRUQk0l4d/CmW4F4YOzUiNRgnlLLDGrutDOzy1ImIA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.bootstrap_4.min.css" integrity="sha512-2C6AmJKgt4B+bQc08/TwUeFKkq8CsBNlTaNcNgUmsDJSU1Fg+R6azDbho+ZzuxEkJnCjLZQMozSq3y97ZmgwjA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Cadastrar Grupo</title>
+
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+		<th:block th:include="/fragments/layout :: menuLateral "></th:block>
+<div id="page-content-wrapper">
+			<th:block th:include="/fragments/layout :: topo "></th:block>
+
+			<div class="container-fluid pt-3">
+	<div class="card w-100">
+		<div class="card-header text-center">
+		<h4 class="text-center">Cadastro de Grupo</h4>
+		</div>
+		<div class="card-body">
+		<div class="row">
+				<div  class="font-18 col-md-8">
+					<span  class="font-weight-bold"> Grupo: </span> <span th:text="${grupo.nome}"></span>
+				</div>
+				<div  class="font-18 col-md-4">
+					<span class="font-weight-bold"> Descrição: </span> <span th:text="${grupo.descricao}"></span>
+				</div>
+			</div>
+		</div>
+		<div class="card-header text-center">
+		<h4 class="text-center">Incluir empresa</h4>
+		</div>
+		<div class="card-body">
+		<div th:class="${'alert ' + alertClass +' alert-dismissible'}" role="alert" 
+		     th:if="${not #strings.isEmpty(mensagem)}" >
+			<i class="fa  fa-exclamation-circle"  th:if="${alertClass=='alert-danger'}"></i><span th:text="${mensagem}"></span>
+			</div>
+		  <form method="post" th:object="${grupoEmpresa}" th:action="@{/grupos/detalhe/{idgrupo}(idgrupo=${grupo.id})}">
+		  	<div class="alert  alert-danger  alert-dismissible" role="alert" 
+		     th:if="${#fields.hasAnyErrors()}"  >
+			<th:block th:each="detailedError : ${#fields.detailedErrors()}">
+				<div><i class="fa  fa-exclamation-circle"></i> [[${detailedError.message}]]</div>
+			</th:block>
+			</div>
+			<div class="row">
+        <!-- 	<div class="form-group col-md-4">
+	          	<label for="cnpj" >Codigo:</label>
+	        	<input type="text" class="form-control" id="empresa.codEmp" th:field="*{empresa.codEmp}"/>
+        	</div>
+        	<div class="form-group col-md-6">
+	        	<label for="nome" >Descrição:</label>
+	        	<input type="text" class="form-control" id="empresa.nome" th:field="*{empresa.nome}"/>
+	        </div> -->
+		<select class="js-example-basic-multiple form-control mt-3 mb-3" th:name="idEmp" id="selectMultiple"  multiple="multiple">
+    		<option th:each="emp : ${empresas}"
+	            th:field="*{empresa}"
+	            th:value="${emp.id}"
+	            th:text="'Cód: '+ ${emp.codEmp} + ' F: '+ ${emp.codEmpFilial} +' Razão: '+ ${emp.nome}">Part name</option>
+		</select>
+	       
+				<button type="submit" class="btn btn-primary mt-3" >Cadastrar</button>
+				<a th:href="@{/grupos/consulta/}" class="btn btn-danger mt-3 ml-2">Cancelar</a>
+			
+				</div>
+	    </form>
+	    </div>
+	    
+	    <div class="card-header text-center">
+			<h4 class="text-center">Empresa(s) incluída(s) no grupo</h4>
+		</div>
+		<div class="card-body">
+		<input class="form-control mb-3" id="buscarNaTabela" type="text" placeholder="Buscar na tabela...">
+		<table class="table table-bordered table-sm tablesorter" id="tabelaOrdenar">
+		 <thead>
+			<tr>
+				<th>Codigo</th>
+			    <th>Razão</th>
+		    </tr>
+		 </thead>
+		 	<tbody th:remove="${#arrays.isEmpty(grupoEmpresas)} ? all : 'all-but-first'">
+				<tr th:each="gEmpresa: ${grupoEmpresas}">
+					<td th:text="${gEmpresa.empresa.codEmp} +' '+ ${gEmpresa.empresa.codEmpFilial}"></td>
+					<td th:text="${gEmpresa.empresa.nome}"></td>
+					<td class="text-right">
+							<a th:href="@{/grupos/detalhe/{idgrupo}/delete/{idempresa}(idgrupo=${grupo.id}, idempresa=${gEmpresa.empresa.id})}" class="link-padrao">
+						<i class="fas fa-trash-alt"></i>
+						</a>
+					</td>
+				</tr>
+		 	</tbody>
+		 </table>
+	
+		    
+	    </div>
+			    
+	    </div>
+ </div>
+ </div>
+<footer> 
+<th:block th:include="/fragments/layout :: rodape "></th:block>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script th:src="@{/vendor/js/bootstrap.bundle.min.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script th:src="@{/js/ordenartabela.js}"></script>
+<script>
+	$(document).ready(function() {
+	    $('#selectMultiple').select2();
+	    
+	    $("#buscarNaTabela").on("keyup", function() {
+	        var value = $(this).val().toLowerCase();
+	        $("#tabelaOrdenar tbody tr").filter(function() {
+	          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	        });
+	      });
+	})
+</script>
+</footer>
+</body>
+</html>

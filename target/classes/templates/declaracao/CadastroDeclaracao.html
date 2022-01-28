@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+
+<title>Cadastrar Declaração</title>
+
+</head>
+<body>
+	<div class="d-flex" id="wrapper">
+		<th:block th:include="/fragments/layout :: menuLateral "></th:block>
+		<div id="page-content-wrapper">
+			<th:block th:include="/fragments/layout :: topo "></th:block>
+
+			<div class="container-fluid pt-3">
+				<div class="card w-100">
+
+					<div class="card-header text-center">
+						<h4 class="text-center">Cadastrar Declaração</h4>
+					</div>
+					<div class="card-body">
+
+						<div class="alert  alert-success  alert-dismissible" role="alert"
+							th:if="${not #strings.isEmpty(mensagem)}">
+							<span th:text="${mensagem}"></span>
+						</div>
+						<form method="post" th:object="${declaracao}">
+							<div class="alert  alert-danger  alert-dismissible" role="alert"
+								th:if="${#fields.hasAnyErrors()}">
+								<th:block th:each="detailedError : ${#fields.detailedErrors()}">
+									<div>
+										<i class="fa  fa-exclamation-circle"></i>
+										[[${detailedError.message}]]
+									</div>
+								</th:block>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-5">
+									<label for="nome">Nome da declaração:</label> <input
+										class="form-control" type="text" id="nome" th:field="*{nome}" />
+								</div>
+							</div>
+							<div class="row">
+								<label for="tipoperiodo" class="ml-3"> Tipo do período:
+								</label>
+							</div>
+							<div>
+								<th:block th:each="tipoPeriodo : ${tiposPeriodo}">
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" th:id="|id_${tipoPeriodo}|"
+											type="radio" th:value="${tipoPeriodo}"
+											th:field="*{tipoPeriodo}"> <label
+											class="form-check-label" th:for="|id_${tipoPeriodo}|"
+											th:text="${tipoPeriodo.descricao}">Nacional</label>
+									</div>
+								</th:block>
+
+							</div>
+							<div>
+								<button type="submit" class="btn btn-primary">Salvar</button>
+								<a th:href="@{/declaracoes/consulta}" class="btn btn-danger">Cancelar</a>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<th:block th:include="/fragments/layout :: rodape "></th:block>
+	</footer>
+</body>
+</html>

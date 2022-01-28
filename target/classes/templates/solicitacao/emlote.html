@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    
+    <title>Solicitação em Lote</title>
+	
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+		<th:block th:include="/fragments/layout :: menuLateral "></th:block>
+<div id="page-content-wrapper">
+			<th:block th:include="/fragments/layout :: topo "></th:block>
+
+			<div class="container-fluid pt-3">
+	<div class="card w-100">
+ 
+	    <div class="card-header text-center">
+			<h4 class="text-center">Solicitação em Lote</h4>
+		</div>
+		<div class="card-body">
+			<div th:class="${'alert alert-danger alert-dismissible'}" role="alert" 
+		     th:if="${not #arrays.isEmpty(empresasErros)}" >
+		     <span><i class="fa  fa-exclamation-circle" ></i>
+		     <b>Já existe(m) solicitações original para o mesmo período e declaração das seguinte(s) empresa(s)</b>
+		     </span><br>
+		     
+		     <div th:each="empErro : ${empresasErros}">
+			<span th:text="${empErro.codEmp} +'-'+ ${empErro.CodEmpFilial} +' '+ ${#strings.abbreviate(empErro.nome,70)}"></span>
+			</div>
+			</div>
+			<div th:class="${'alert alert-success alert-dismissible'}" role="alert" 
+		     th:if="${not #arrays.isEmpty(empresasGravadas)}" >
+		     <span><i class="fa  fa-exclamation-circle" ></i><b> Empresa(s) gravada(s) com sucesso: </b></span>
+		     <div th:each="empGravada : ${empresasGravadas}">
+			<span th:text="${empGravada.codEmp} +'-' + ${empGravada.CodEmpFilial} +' ' + ${#strings.abbreviate(empGravada.nome,70)}"></span>
+			</div>
+			</div>
+		<table class="table table-bordered table-sm">
+		 <thead>
+			<tr>
+				<th>Nome</th>
+			    <th>Descrição</th>
+		    </tr>
+		 </thead>
+		 	<tbody th:remove="${#arrays.isEmpty(grupoList)} ? all : 'all-but-first'">
+				<tr th:each="grupo: ${grupoList}">
+					
+					<td ><a th:href="@{/solicitacao/emlote/{idgrupo}(idgrupo=${grupo.id})}" th:text="${grupo.nome}"></a></td>
+					<td th:text="${grupo.descricao}"></td>
+
+			</tr>
+		 	</tbody>
+		 </table>
+		    
+	    </div>
+ </div>
+ </div>
+ </div>
+ </div>
+<footer> 
+<th:block th:include="/fragments/layout :: rodape "></th:block>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script th:src="@{/vendor/js/bootstrap.bundle.min.js}"></script>
+</footer>
+</body>
+</html>

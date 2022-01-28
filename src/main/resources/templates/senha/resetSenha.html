@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head th:fragment="cabecalho">
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/vendor/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome/css/all.css}" />
+<!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet" /> -->
+
+
+</head>
+<body>
+<div class="text-center">
+    <h2>Redenifir senha</h2>
+</div>
+         
+<form th:action="@{/reset_password}" method="post" style="max-width: 350px; margin: 0 auto;">
+    <input type="hidden" name="token" th:value="${token}" />
+<div class="border border-secondary rounded p-3">
+    <div>
+        <p>
+            <input type="password" name="password" id="password" class="form-control"
+                placeholder="Entre com a nova senha" required autofocus />
+        </p>         
+        <p>
+            <input type="password" name="confirmpassword" id="confirmpassword" class="form-control" placeholder="Confirme sua nova senha"
+                required oninput="checkPasswordMatch(this);" />
+        </p>         
+        <p class="text-center">
+            <input type="submit" value="Alterar senha" class="btn btn-primary" />
+        </p>
+    </div>
+</div>
+</form>
+<footer> 
+<th:block th:include="/fragments/layout :: rodape "></th:block>
+</footer>
+<script >
+function checkPasswordMatch(fieldConfirmPassword) {
+    if (fieldConfirmPassword.value != $("#password").val()) {
+        fieldConfirmPassword.setCustomValidity("As senhas não conferem!");
+    } else {
+        fieldConfirmPassword.setCustomValidity("");
+    }
+}
+</script>
+</body>
+</html>

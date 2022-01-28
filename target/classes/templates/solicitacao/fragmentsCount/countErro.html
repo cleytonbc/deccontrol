@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="countErro">
+	<div th:if="${not #strings.isEmpty(countErro)}" > 
+        <a class="nav-link p-0 pr-2" th:href="@{/solicitacao/consulta/erro}">
+            <i class="fa fa-exclamation-circle">
+            <span class="badge badge-danger"  th:text="${countErro}"></span>
+          </i>
+        </a>
+</div>
+</div>
+
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+<title>Solicitação</title>
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+
+<style>
+    .nav-pills > li > a.active, .nav-pills > li > a:focus {
+        color: white;
+        background-color: #6c757d;
+    }
+
+	.nav-link.active {
+        color: white !important;
+        background-color: #6c757d !important;
+    }
+        .nav-pills > li> a:hover {
+            background-color: #6c757d;
+            color:white;
+        }
+</style>
+
+</head>
+
+<body>
+	<div class="d-flex" id="wrapper">
+
+		<th:block th:include="/fragments/layout :: menuLateral "></th:block>
+
+		<div id="page-content-wrapper">
+			<th:block th:include="/fragments/layout :: topo "></th:block>
+
+			<div class="container-fluid pt-3">
+				<div class="card w-100">
+					<div class="card-header ">
+						<h5 class="card-title text-center">Consultar solicitações</h5>
+					</div>
+					<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+						<li class="nav-item"><a class="nav-link active" id="PorComp"
+							data-toggle="pill" href="#pills-competencia" role="tab"
+							aria-controls="pills-home" aria-selected="true">Por
+								competência</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="pills-entregue-tab" data-toggle="pill" href="#pills-entregue"
+							role="tab" aria-controls="pills-profile" aria-selected="false">Entregues
+								no período</a></li>
+								
+						<li class="nav-item"><a class="nav-link"
+							id="pills-noMes-tab" data-toggle="pill" href="#pills-noMes"
+							role="tab" aria-controls="pills-profile" aria-selected="false">Solicitado no mês</a></li>
+						<li class="nav-item"><a class="nav-link"
+							id="pills-contact-tab" data-toggle="pill" href="#pills-pendente"
+							role="tab" aria-controls="pills-contact" aria-selected="false">Pendentes</a>
+						</li>
+					</ul>
+					<div class="tab-content" id="pills-tabContent">
+						<div class="tab-pane fade show active" id="pills-competencia"
+							role="tabpanel" aria-labelledby="pills-home-tab">
+
+							<div class="card-body">
+									<form th:action="@{/solicitacao/consulta/competencia}"
+										method="post">
+										<div class="row">
+											<div class="col-sm-5">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label for="codigo" class="input-group-text">Competência*</label>
+													</div>
+													<input type="month" id="mesComp" th:name="mesComp"
+														class="form-control" min="2015-01" required>
+												</div>
+											</div>
+											<div class="col-sm-5">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label for="dec" class="input-group-text">Declaração*</label>
+													</div>
+													<select id="decComp" name="decComp" class="custom-select"
+														required>
+														<option value="">Selecione a declaração</option>
+														<option th:each="declaracao : ${declaracoes}"
+															th:value="${declaracao.idDec}"
+															th:text="${declaracao.nome}">DCTF</option>
+													</select>
+													<div class="input-group-append">
+														<button class="btn btn-outline-secondary" type="submit"
+															id="clickEntregue">
+															<i class="fas fa-search"></i>
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+
+							</div>
+						<div class="tab-pane fade" id="pills-entregue" role="tabpanel"
+							aria-labelledby="pills-entregue-tab">
+							<div class="card-body">
+								<form th:action="@{/solicitacao/consulta/entregue}"
+									method="post">
+									<div class="row">
+										<div class="col-sm-5">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<label for="codigo" class="input-group-text">Competência*</label>
+												</div>
+												<input type="month" id="mesComp" th:name="mesComp"
+													class="form-control" min="2015-01" required>
+											</div>
+										</div>
+										<div class="col-sm-5">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<label for="dec" class="input-group-text">Declaração*</label>
+												</div>
+												<select id="decComp" name="decComp" class="custom-select"
+													required>
+													<option value="">Selecione a declaração</option>
+													<option th:each="declaracao : ${declaracoes}"
+														th:value="${declaracao.idDec}"
+														th:text="${declaracao.nome}">DCTF</option>
+												</select>
+												<div class="input-group-append">
+													<button class="btn btn-outline-secondary" type="submit"
+														id="clickEntregue">
+														<i class="fas fa-search"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="pills-noMes" role="tabpanel"
+							aria-labelledby="pills-noMes-tab">
+							<div class="card-body">
+								<form th:action="@{/solicitacao/consulta/nomes}"
+									method="post">
+									<div class="row">
+										<div class="col-sm-5">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<label for="codigo" class="input-group-text">Mês solicitado*</label>
+												</div>
+												<input type="month" id="mesSolicita" th:name="mesSolicita"
+													class="form-control" min="2015-01" required>
+											</div>
+										</div>
+										<div class="col-sm-5">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<label for="dec" class="input-group-text">Declaração*</label>
+												</div>
+												<select id="decComp" name="decComp" class="custom-select"
+													required>
+													<option value="">Selecione a declaração</option>
+													<option th:each="declaracao : ${declaracoes}"
+														th:value="${declaracao.idDec}"
+														th:text="${declaracao.nome}">DCTF</option>
+												</select>
+												<div class="input-group-append">
+													<button class="btn btn-outline-secondary" type="submit"
+														id="clickEntregue">
+														<i class="fas fa-search"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="pills-pendente" role="tabpanel"
+							aria-labelledby="pills-contact-tab">
+							<div class="card-body">
+									<div class="row">
+										<div class="col-sm-3">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<label for="dec" class="input-group-text">Todas não entregues</label>
+												</div>
+												<div class="input-group-append">
+													<a th:href="@{/solicitacao/consulta/pendente}" class="btn btn-outline-secondary" type="submit">
+														<i class="fas fa-search"></i>
+													</a>
+												</div>
+											</div>
+										</div>
+									
+										<div class="col-sm-3">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<label for="dec" class="input-group-text">Somente Liberadas</label>
+												</div>
+												<div class="input-group-append">
+													<a th:href="@{/solicitacao/consulta/liberada}" class="btn btn-outline-secondary" type="submit">
+														<i class="fas fa-search"></i>
+													</a>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<label for="dec" class="input-group-text">Somente com erro</label>
+												</div>
+												<div class="input-group-append">
+													<a th:href="@{/solicitacao/consulta/erro}" class="btn btn-outline-secondary" type="submit"
+														id="clickEntregue">
+														<i class="fas fa-search"></i>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+			</div>
+
+		</div>
+	</div>
+	<footer>
+		<th:block th:include="/fragments/layout :: rodape "></th:block>
+
+		<script
+			src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>
+		<script
+			src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+		<script th:src="@{/js/listasolicitacoesteste.js}"></script>
+
+	</footer>
+
+
+
+
+</body>
+</html>

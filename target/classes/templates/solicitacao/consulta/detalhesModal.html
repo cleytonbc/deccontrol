@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+</head>
+<body>
+	<div class="modal fade" id="detalhesModal" role="dialog"  th:fragment="modalConteudo">
+		<div class="modal-dialog moda-">
+			<div class="modal-content">
+				<div class="modal-header">
+         		 <h5 class="modal-title">Detalhes da solicitação</h5>
+        		  <button type="button" class="close" data-dismiss="modal">&times;</button>
+      			  </div>
+				<div class="modal-body">
+				<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-5 ml-auto text-right">
+					<span >Status: </span><span class="badge badge-danger" th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).ERRO}" th:text="${solicitacao.status}"></span>
+					<span class="badge badge-success" th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).ENTREGUE}" th:text="${solicitacao.status}"></span>
+					<span class="badge badge-warning" th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).LIBERADA}" th:text="${solicitacao.status}"></span>
+					<span class="badge badge-secondary" th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).CANCELADA}" th:text="${solicitacao.status}"></span>
+					<!-- 	<span>Status </span><span class="badge " th:classappend="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).ERRO} ? 'badge-danger' :  'badge-warning'" th:text="${solicitacao.status}"></span> --> 
+					</div>
+				</div>
+				<div class="row" th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).ENTREGUE}" >
+					<div class="col-md-12 alert alert-success">
+						<span >Entregue no dia </span><span class="font-weight-bold" th:text="${#temporals.format(solicitacao.dataRetorno, 'dd-MM-yyyy HH:mm')}"></span>
+						<span>por </span> <span class="font-weight-bold" th:text="${solicitacao.usuarioRetorno.nome}">Fulano de Tal</span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<span class="font-weight-bold">Empresa: </span>
+					</div>
+					<div class="col-md-12">
+						<span th:text="${solicitacao.empresa.codEmp} +'-' + ${solicitacao.empresa.codEmpFilial} + ' '+ ${#strings.abbreviate(solicitacao.empresa.nome,40)} "></span>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-3">
+						<span class="font-weight-bold">Período:</span>
+					</div>
+					<div class="col-md-3">
+					 <span class="font-weight-bold">Tipo:</span> 
+					 </div>
+					<div class="col-md-6">
+						<span class="font-weight-bold">Declaração: </span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						 <span th:text="${solicitacao.competencia}" ></span>
+					</div>
+					<div class="col-md-3">
+					 <span th:text="${solicitacao.tipoDec}" ></span>  
+					</div>
+					<div class="col-md-6">
+						<span th:text="${solicitacao.declaracao.nome}" ></span>
+					</div>
+				</div>
+				<div class="row pt-2">
+				<!--  	<div class="col-md-12 ml-auto font-italic alert alert-secondary">
+						<span>Solicitado no dia </span><span class="font-weight-bold" th:text="${#temporals.format(solicitacao.dataSolicitacao, 'dd-MM-yyyy HH:mm')}"></span>
+						<span>por </span> <span class="font-weight-bold" th:text="${solicitacao.usuarioSolicita.nome}">Fulano de Tal</span>
+				</div>-->
+				<div class="col-12 pt-2">
+				<span style="display:block; font-size:14px;"><i>Solicitado por <span class="font-weight-bold" th:text="${solicitacao.usuarioSolicita.nome}"></span> no dia <span class="font-weight-bold" th:text="${#temporals.format(solicitacao.dataSolicitacao, 'dd-MM-yyyy HH:mm')}"></span></i></span>
+				</div>
+				</div>
+				<div class="row text-right pt-3" >
+				<div class="col align-self-end">
+					<span class="btn btn-outline-danger btn-sm" th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).LIBERADA}" th:onclick="'javascript:cancelaSolicitacao(' + ${solicitacao.id} +')'">
+					Cancelar solicitação
+					</span>
+					<span class="btn btn-outline-danger  btn-sm"  th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).ERRO}" th:onclick="'javascript:cancelaSolicitacao(' + ${solicitacao.id} +')'">
+					Cancelar solicitação
+					</span>
+				</div>	
+				</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

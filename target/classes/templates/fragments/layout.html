@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+
+<head th:fragment="cabecalho">
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" th:href="@{/vendor/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome/css/all.css}" />
+<!-- <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet" /> -->
+
+<link type="text/css" rel="stylesheet" 	th:href="@{/css/style-sidebar.css}">
+<link type="text/css" rel="stylesheet" th:href="@{/css/notificacao.css}">
+<script defer th:src="@{/js/solid.js}"></script>
+
+</head>
+<body>
+
+	<div class="d-flex" id="wrapper">
+
+		<!-- Sidebar -->
+		<div th:fragment="menuLateral">
+		<div class="bg-dark text-light" id="sidebar-wrapper" >
+			<div class="sidebar-heading p-2 text-center">
+				<a th:href="@{/}" class="text-decoration-none text-reset"><img th:src="@{/images/logo.svg}" width="100" height="85" ><h4>DecControl<sub class="font-italic" style="font-size:10px">Beta</sub></h4> </a>
+			</div>
+			<div class="list-group list-group-flush">
+				<a th:href="@{/}"
+					class="list-group-item list-group-item-action bg-dark text-light">
+					<span class="fa fa-home mr-3"></span> Página Inicial
+				</a>
+				<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+					class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle">
+					<span class="fas fa-clipboard mr-3"></span> Solicitação
+				</a>
+
+				<ul
+					class="list-group-item list-group-item-action bg-dark text-light list-unstyled mr-3 collapse"
+					id="pageSubmenu" style="">
+					<li><a th:href="@{/solicitacao/novo}"
+						class="list-group-item list-group-item-action bg-dark text-light"><i 
+						class="fas fa-angle-right mr-3"></i> Nova</a></li>
+					<li><a th:href="@{/solicitacao/novolote}"
+						class="list-group-item list-group-item-action bg-dark text-light"><i 
+						class="fas fa-angle-double-right mr-3"></i> Em Lote </a></li>
+					<div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+					<li><a th:href="@{/solicitacao/processar}"
+						class="list-group-item list-group-item-action bg-dark text-light"><i
+							class="fas fa-tasks mr-3"></i> Processar</a></li>
+					</div>
+					<li><a th:href="@{/solicitacao/consulta}"
+						class="list-group-item list-group-item-action bg-dark text-light"><i
+							class="fas fa-search mr-3"></i> Consultar</a></li>
+				</ul>
+				<a href="#pageSubmenu1" data-toggle="collapse"
+					aria-expanded="false"
+					class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle">
+					<span class="fas fa-building mr-3"></span> Empresa
+				</a>
+				<ul
+					class="list-group-item list-group-item-action bg-dark text-light list-unstyled mr-3 collapse"
+					id="pageSubmenu1" style="">
+					<li><a th:href="@{/empresas/novo}"
+						class="list-group-item list-group-item-action bg-dark text-light"><i
+							class="fas fa-user-plus mr-3"></i> Novo</a></li>
+					<li><a th:href="@{/empresas/consulta}"
+						class="list-group-item list-group-item-action bg-dark text-light"><i
+							class="fas fa-search mr-3"></i> Consulta</a></li>
+				</ul>
+				<a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false"
+					class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle">
+					<i class="fas fa-city mr-3"></i> Grupos
+				</a>
+				<ul
+					class="list-group-item list-group-item-action bg-dark text-light list-unstyled mr-3 collapse"
+					id="pageSubmenu2" style="">
+					<li><a th:href="@{/grupos/novo}"
+						class="list-group-item list-group-item-action bg-dark text-light"><i
+							class="fas fa-user-plus mr-3"></i> Novo</a></li>
+					<li><a th:href="@{/grupos/consulta}"
+						class="list-group-item list-group-item-action bg-dark text-light"><span
+							class="fas fa-search mr-3"></span> Consultar</a></li>
+				</ul>
+				
+				<a href="#pageSubmenu4" data-toggle="collapse" aria-expanded="false"
+					class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle">
+					<i class="fas fa-list-ol mr-3"></i> Declarações
+				</a>
+				<ul
+					class="list-group-item list-group-item-action bg-dark text-light list-unstyled mr-3 collapse"
+					id="pageSubmenu4" style="">
+					<li><a th:href="@{/declaracoes/novo}"
+						class="list-group-item list-group-item-action bg-dark text-light"><i
+							class="fas fa-pencil-alt mr-3"></i> Novo</a></li>
+					<li><a th:href="@{/declaracoes/consulta}"
+						class="list-group-item list-group-item-action bg-dark text-light"><span
+							class="fa fa-search  mr-3"></span> Consultar</a></li>
+				</ul>
+				<div sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+				<a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false"
+					class="list-group-item list-group-item-action bg-dark text-light dropdown-toggle">
+					<i class="fas fa-users mr-3"></i> Usuarios
+				</a>
+				<ul
+					class="list-group-item list-group-item-action bg-dark text-light list-unstyled mr-3 collapse"
+					id="pageSubmenu3" style="">
+					<li><a th:href="@{/usuarios/novo}"
+						class="list-group-item list-group-item-action bg-dark text-light"><i
+							class="fas fa-user-plus mr-3"></i> Novo</a></li>
+					<li><a th:href="@{/usuarios/consulta}"
+						class="list-group-item list-group-item-action bg-dark text-light"><span
+							class="fas fa-search mr-3"></span> Consultar</a></li>
+				</ul>
+				</div>
+				<a th:href="@{/solicitacao/consulta}"
+					class="list-group-item list-group-item-action bg-dark text-light"><span
+					class="fa fa-search mr-3"></span> Pesquisar</a>
+			</div>
+		</div>
+		</div>
+		<!-- /#sidebar-wrapper -->
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div th:fragment="topo">
+			<nav class="navbar navbar-icon-top navbar-expand-sm navbar-dark p-0 bg-dark" >
+				<button class="btn btn-secondary mr-4" id="menu-toggle">
+					<i class="fas fa-bars"></i>
+				</button>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="true"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="navbar-collapse collapse show"
+					id="navbarSupportedContent" style="">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item active"></li>
+						<li class="nav-item"><a class="nav-link" href="#"> </a></li>
+						<li class="nav-item"></li>
+					</ul>
+					<ul class="navbar-nav ">
+						<li class="nav-item ">
+							<div id="countLiberada">
+								<th:block
+									th:include="/solicitacao/fragmentsCount/countLiberada :: countLiberada "></th:block>
+							</div>
+						</li>
+						<li class="nav-item">
+							<div id="countErro">
+								<th:block th:include="/solicitacao/fragmentsCount/countErro :: countErro "></th:block>
+							</div>
+						</li>
+					</ul>
+				<!-- 	<form class="form-inline my-2 my-lg-0">
+						<input class="form-control mr-sm-2" type="text"
+							placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					</form> -->
+					    <div sec:authorize="isAuthenticated()">
+					    <ul class="nav navbar-nav">
+					        <li class="dropdown">
+					            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false"> 
+					                <span th:text="${#authentication.getPrincipal().nome}"> </span><b class="caret"></b>
+					            </a>
+					            <div class="dropdown-menu dropdown-menu-right position-absolute" aria-labelledby="navbarDropdown">
+					                <a class="dropdown-item" th:href="@{/minhaconta}">Minha conta</a>
+					                <div class="dropdown-divider"></div>
+					                <a class="dropdown-item" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+					            </div>
+					        </li>
+					    </ul>
+					    </div>
+					<div sec:authorize="isAnonymous()">
+					<a th:href="@{/login}">
+					
+					<span class="btn btn-outline-secondary my-2 my-sm-0 mr-4">
+					<i class="fas fa-sign-in-alt"></i> Login</span></a>
+					</div>
+				</div>
+			</nav>
+			</div>
+			<div class="container-fluid pt-3">
+
+				<!-- ****** Conteúdo ****** -->
+
+			</div>
+
+		</div>
+	</div>
+	<footer>
+	<div th:fragment="rodape">
+<!-- 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+	<script th:src="@{/vendor/js/jquery.min.js}"></script>
+	<script th:src="@{/js/popper.js}"></script>
+	<script th:src="@{/vendor/js/bootstrap.bundle.min.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+	<script th:src="@{/js/notificacao.js}"></script>
+	<script>
+	const urlErro = "[[@{/solicitacao/countErro}]]";
+	const urlLiberada = "[[@{/solicitacao/countLiberada}]]";
+		$("#menu-toggle").click(function(e) {
+			e.preventDefault();
+
+			$("#wrapper").toggleClass("toggled");
+		});
+		
+		
+	</script>
+</div>
+</footer>
+</body>
+</html>

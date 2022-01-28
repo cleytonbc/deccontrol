@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+
+<title>Cadastro Empresa</title>
+
+</head>
+<body>
+	<div class="d-flex" id="wrapper">
+		<th:block th:include="/fragments/layout :: menuLateral "></th:block>
+		<div id="page-content-wrapper">
+			<th:block th:include="/fragments/layout :: topo "></th:block>
+
+			<div class="container-fluid pt-3">
+				<div class="card w-100">
+					<div class="card-header text-center">
+						<h4 class="text-center">Cadastro de empresa</h4>
+					</div>
+					<div class="card-body">
+
+						<div class="alert  alert-success  alert-dismissible" role="alert"
+							th:if="${not #strings.isEmpty(mensagem)}">
+							<span th:text="${mensagem}"></span>
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="alert  alert-danger  alert-dismissible" role="alert"
+							th:if="${not #strings.isEmpty(erro)}">
+							<span th:text="${erro}"></span>
+							<button type="button" class="close" data-dismiss="alert"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form th:action="@{/minhaconta}" th:object="${usuario}"
+							method="post">
+
+							<div class="row">
+								<div class="form-group col-md-3">
+									<label for="codEmp">Login:</label> <input type="text"
+										id="login" class="form-control" th:field="*{login}" disabled />
+									<input type="hidden" id="id" th:field="*{id}" />
+								</div>
+								<div class="form-group col-md-3">
+									<label for="nome">Nome:</label> <input type="text" id="nome"
+										class="form-control" th:field="*{nome}" />
+								</div>
+								<div class="form-group col-md-5">
+									<label for="sobrenome">Sobrenome:</label> <input type="text"
+										id="sobrenome" class="form-control" th:field="*{sobrenome}" />
+								</div>
+
+
+							</div>
+							<div class="row">
+								<div class="form-group col-md-5">
+									<label for="email">E-mail:</label> <input type="email"
+										id="email" class="form-control" th:field="*{email}" />
+								</div>
+								<div class="form-group col-md-3">
+									<label for="codEmpFilial">Nova senha:</label> <input
+										type="password" name="novaSenha" class="form-control" />
+								</div>
+								<div class="form-group col-md-3">
+									<label for="codEmpFilial">Confirmar senha:</label> <input
+										type="password" name="confirmaSenha" class="form-control"
+										oninput="checkPasswordMatch(this);" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-3">
+									<label for="codEmpFilial">Senha atual:</label> <input
+										type="password" name="senhaAtual" class="form-control" />
+								</div>
+							</div>
+
+							<div class="row">
+								<button class="btn btn-primary ml-3" type="submit">Salvar</button>
+								<a th:href="@{/}" class="btn btn-danger ml-3">Cancelar</a>
+
+
+
+
+
+
+
+
+							</div>
+							</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<th:block th:include="/fragments/layout :: rodape "></th:block>
+	</footer>
+	<script>
+		function checkPasswordMatch(fieldConfirmaSenha) {
+			if (texto.getText() == null || texto.getText().trim().equals(""))
+				if (fieldConfirmaSenha.value != $("#novaSenha").val()) {
+					fieldConfirmaSenha
+							.setCustomValidity("As senhas não conferem!");
+				} else {
+					fieldConfirmaSenha.setCustomValidity("");
+				}
+		}
+	</script>
+</body>
+</html>

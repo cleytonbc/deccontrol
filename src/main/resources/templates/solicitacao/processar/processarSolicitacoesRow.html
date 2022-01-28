@@ -1,0 +1,42 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head></head>
+<body>  
+
+				<th:block th:fragment="solicitacao-row">
+			
+					
+					<td th:text="${solicitacao.empresa.codEmp + '-' + solicitacao.empresa.codEmpFilial}" ></td>
+					<td th:text="${#strings.abbreviate(solicitacao.empresa.nome,40)}"></td>
+					<td th:text="${solicitacao.declaracao.nome}"></td>
+					<td th:text="${solicitacao.competencia}"></td>
+					<td th:text="${solicitacao.tipoDec}"></td>
+					<td th:if="${solicitacao.status != T(br.com.contabilidadereal.deccontrol.model.Status).ENTREGUE}" th:id="'statusId'+${solicitacao.id}">
+					<span th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).LIBERADA}"  class="text-success btn active" th:onclick="'javascript:openModalConfirma(' + ${solicitacao.id} +')'"><i class="fas fa-check"></i></span> 
+					<span th:if="${solicitacao.status != T(br.com.contabilidadereal.deccontrol.model.Status).LIBERADA}"  class="text-success btn disabled" ><i class="fas fa-check"></i></span>
+					<span th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).ERRO}" class="text-warning btn " th:onclick="'javascript:liberadaSolicitacao(' + ${solicitacao.id} +')'"><i class="fas fa-thumbs-up"></i></span>
+					<span th:if="${solicitacao.status != T(br.com.contabilidadereal.deccontrol.model.Status).ERRO}" class="text-danger btn " th:onclick="'javascript:erroSolicitacao(' + ${solicitacao.id} +')'"><i class="fas fa-thumbs-down"></i></span>
+					</td>
+					<td th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).ENTREGUE}" class="text-secondary text-center " th:id="'statusId'+${solicitacao.id}">
+					<span  class="btn disabled" ><i class="fas fa-check-double"></i></span></td>
+					<td th:onclick="'javascript:openModalSolicitacao(' + ${solicitacao.id} +')'" class="text-center"><span class="btn text-info"><i class="fas fa-info-circle"></i></span></td>
+			
+			    </th:block>
+			    
+			    <th:block th:fragment="cancelada-row">
+			
+					
+					<td th:text="${solicitacao.empresa.codEmp + '-' + solicitacao.empresa.codEmpFilial}"></td>
+					<td th:text="${#strings.abbreviate(solicitacao.empresa.nome,40)}"></td>
+					<td th:text="${solicitacao.declaracao.nome}"></td>
+					<td th:text="${solicitacao.competencia}"></td>
+					<td th:text="${solicitacao.tipoDec}"></td>
+					<td th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).ENTREGUE}" class="text-center"><span class="badge badge-success" th:text="${solicitacao.status}"></span></td>
+					<td th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).LIBERADA}" class="text-center"><span class="badge badge-warning" th:text="${solicitacao.status}"></span></td> 
+					<td th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).ERRO}" class="text-center"><span class="badge badge-danger" th:text="${solicitacao.status}"></span></td>
+					<td th:if="${solicitacao.status == T(br.com.contabilidadereal.deccontrol.model.Status).CANCELADA}" class="text-center"><span class="badge badge-secondary" th:text="${solicitacao.status}"></span></td>
+					<td th:onclick="'javascript:openModalSolicitacao(' + ${solicitacao.id} +')'" class="text-center"><span class="btn text-info"><i class="fas fa-info-circle"></i></span></td>
+			
+			    </th:block>
+					
+
+</body>

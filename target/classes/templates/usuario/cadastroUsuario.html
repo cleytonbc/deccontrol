@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+<title>Cadastrar Usuário</title>
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+		<th:block th:include="/fragments/layout :: menuLateral "></th:block>
+<div id="page-content-wrapper">
+			<th:block th:include="/fragments/layout :: topo "></th:block>
+
+			<div class="container-fluid pt-3">
+	<div class="card w-100">
+		<div class="card-header text-center">
+		<h4 class="text-center">Cadastrar Usuário</h4>
+		</div>
+		<div class="card-body">
+<div class="alert  alert-success  alert-dismissible" role="alert" 
+		     th:if="${not #strings.isEmpty(mensagem)}" >
+			<span th:text="${mensagem}"></span>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		   	 <span aria-hidden="true">&times;</span>
+		    </button>
+			</div>
+<form th:action="@{/usuarios/novo}" th:object="${usuario}" method="post">
+			<div class="alert  alert-danger  alert-dismissible" role="alert" 
+		     th:if="${#fields.hasAnyErrors()}"  >
+			<th:block th:each="detailedError : ${#fields.detailedErrors()}">
+				<div><i class="fa  fa-exclamation-circle"></i> [[${detailedError.message}]]</div>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+			</th:block>
+			</div>
+			<div class="row">
+				   		<div class="form-group col-md-3">
+				   		    <label for="codEmp">Login:</label>
+				        	<input type="text"  id="login" class="form-control" th:field="*{login}"/>
+				    	</div>
+				    	<div class="form-group col-md-3">
+				    	   	<label for="codEmpFilial">Senha:</label>
+				        	<input type="password"  id="senha" class="form-control" th:field="*{senha}"/>
+				   		</div>
+			</div>
+			<div class="row">
+				   		<div class="form-group col-md-3">
+				   		   	<label for="nome">Nome:</label>
+				        	<input type="text" id="nome" class="form-control" th:field="*{nome}" />
+				    	</div>
+				    	<div class="form-group col-md-5">
+				   		   	<label for="sobrenome">Sobrenome:</label>
+				        	<input type="text" id="sobrenome" class="form-control" th:field="*{sobrenome}" />
+				    	</div>
+			</div>
+			<div class="row">
+				    	<div class="form-group col-md-4">
+				   		   	<label for="email">E-mail:</label>
+				        	<input type="email" id="email" class="form-control" th:field="*{email}" />
+				    	</div>
+			</div>
+	<div>
+     <label>Regras de acesso: </label>
+      <div class="form-check form-check-inline" th:each="role, itemStat: ${allRoles}">
+       <input class="form-check-input" type="checkbox" name="idroles" th:value="${role.id} " /> 
+        <label class="form-check-label" for="roles" th:text="${role.descricao}"></label>
+        </div>
+        </div>
+<div class="row">
+<button class="btn btn-primary ml-3" type="submit">Cadastrar</button>
+<a th:href="@{/}" class="btn btn-danger ml-3">Cancelar</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<footer>
+	<th:block th:include="/fragments/layout :: rodape "></th:block>
+	</footer>
+</body>
+</html>

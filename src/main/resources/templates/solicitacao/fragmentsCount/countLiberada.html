@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="countLiberada" >
+	<div th:if="${not #strings.isEmpty(countLiberada)}" >	
+   		<a class="nav-link p-0" th:href="@{/solicitacao/consulta/liberada}">
+     		<i class="fa fa-check-circle">
+			<span class="badge badge-success" th:text="${countLiberada}"></span>
+			</i>
+   </a>
+</div>
+</div>
+
+
+
+</html>

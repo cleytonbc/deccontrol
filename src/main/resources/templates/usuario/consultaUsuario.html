@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    
+    <title>Consulta Usuário</title>
+	
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+		<th:block th:include="/fragments/layout :: menuLateral "></th:block>
+<div id="page-content-wrapper">
+			<th:block th:include="/fragments/layout :: topo "></th:block>
+
+			<div class="container-fluid pt-3">
+	<div class="card w-100">
+ 
+ 	<div class="card-header text-center">
+			<h4 class="text-center">Consultar Usuário</h4>
+		</div>
+		<div class="card-body">
+
+		<table class="table table-bordered table-sm">
+		 <thead>
+			<tr>
+				<th>Login</th>
+			    <th>Nome</th>
+			    <th>E-mail</th>
+			    <th></th>
+		    </tr>
+		 </thead>
+		 	<tbody th:remove="${#arrays.isEmpty(usuarios)} ? all : 'all-but-first'">
+				<tr th:each="usuario: ${usuarios}">
+					
+					<td th:text="${usuario.login}"></td>
+					<td th:text="${usuario.nome} + ' ' + ${usuario.sobrenome}" ></td>
+					<td th:text="${usuario.email}"></td>
+					<td class="text-center">
+		   				<a th:href="@{/usuarios/editar/{idusuario}(idusuario=${usuario.id})}" class="link-padrao">
+		    			<i class="fas fa-user-edit"></i>
+		  				</a>
+		  			</td>
+				</tr>
+		 	</tbody>
+		 </table>
+		    
+	    </div>
+ </div>
+ </div>
+ </div>
+ </div>
+<footer> 
+<th:block th:include="/fragments/layout :: rodape "></th:block>
+</footer>
+</body>
+</html>

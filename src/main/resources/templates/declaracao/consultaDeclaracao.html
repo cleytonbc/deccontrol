@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<th:block th:include="/fragments/layout :: cabecalho "></th:block>
+
+<title>Consultar Declaração</title>
+
+</head>
+<body>
+	<div class="d-flex" id="wrapper">
+		<th:block th:include="/fragments/layout :: menuLateral "></th:block>
+		<div id="page-content-wrapper">
+			<th:block th:include="/fragments/layout :: topo "></th:block>
+
+			<div class="container-fluid pt-3">
+				<div class="card w-100">
+
+					<div class="card-header text-center">
+						<h4 class="text-center">Consulta Declaração</h4>
+					</div>
+					<div class="card-body">
+
+						<table class="table table-bordered table-sm">
+							<thead>
+								<tr>
+									<th>Nome</th>
+									<th>Tipo de Período</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody
+								th:remove="${#arrays.isEmpty(declaracoes)} ? all : 'all-but-first'">
+								<tr th:each="declaracao: ${declaracoes}">
+									<td th:text="${declaracao.nome}"></td>
+									<td th:text="${declaracao.tipoPeriodo}"></td>
+									<td class="text-center"><a
+										th:href="@{/declaracoes/editar/{iddeclaracao}(iddeclaracao=${declaracao.idDec})}">
+											<i class="fas fa-user-edit"></i>
+									</a></td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer>
+		<th:block th:include="/fragments/layout :: rodape "></th:block>
+	</footer>
+</body>
+</html>
